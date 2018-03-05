@@ -55,23 +55,23 @@ var dispatch = d3.dispatch("start", "end");
 
 添加、移除或者获取指定 *typenames* 的 *callback*。如果指定了 *callback* 则将其注册为对应的 *typenames* 的回调，如果对应的 *typenames* 已经有回调则将其替换。
 
-The specified *typenames* is a string, such as `start` or `end.foo`. The type may be optionally followed by a period (`.`) and a name; the optional name allows multiple callbacks to be registered to receive events of the same type, such as `start.foo` and `start.bar`. To specify multiple typenames, separate typenames with spaces, such as `start end` or `start.foo start.bar`.
+*typenames* 是一个字符串，包含(`.`)分开的 *type* 和 *names* ，其中 *names* 可选。比如 `start` or `end.foo` 这种形式。也就是说同一种 *type* 可以指定多个不同 *name* 的回调，比如 `start.foo` 和 `start.bar `，在同时指定多个 *typenames* 时可以使用空格隔开: `start end` or `start.foo start.bar`.
 
-To remove all callbacks for a given name `foo`, say `dispatch.on(".foo", null)`.
+移除所有 *name* 为 *foo* 的回调，使用`dispatch.on(".foo", null)`.
 
-If *callback* is not specified, returns the current callback for the specified *typenames*, if any. If multiple typenames are specified, the first matching callback is returned.
+如果没有指定 *callback* 则返回当前 *typenames* 对应的回调(如果有的话)。如果有多个符合条件的则返回第一个匹配的回调。
 
 <a name="dispatch_copy" href="#dispatch_copy">#</a> *dispatch*.<b>copy</b>() [<>](https://github.com/d3/d3-dispatch/blob/master/src/dispatch.js#L49 "Source")
 
-Returns a copy of this dispatch object. Changes to this dispatch do not affect the returned copy and <i>vice versa</i>.
+返回当前分发对象的副本。修改原分发对象不会影响副本，反之亦然。
 
 <a name="dispatch_call" href="#dispatch_call">#</a> *dispatch*.<b>call</b>(<i>type</i>[, <i>that</i>[, <i>arguments…</i>]]) [<>](https://github.com/d3/d3-dispatch/blob/master/src/dispatch.js#L54 "Source")
 
-Like [*function*.call](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call), invokes each registered callback for the specified *type*, passing the callback the specified *arguments*, with *that* as the `this` context. See [*dispatch*.apply](#dispatch_apply) for more information.
+与 [*function*.call](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call) 类似, 调用对应 *type* 的每个回调，*that* 参数表示回调的 *this* 上下文并传递指定的 *arguments*，参考 [*dispatch*.apply](#dispatch_apply)。
 
 <a name="dispatch_apply" href="#dispatch_apply">#</a> *dispatch*.<b>apply</b>(<i>type</i>[, <i>that</i>[, <i>arguments</i>]]) [<>](https://github.com/d3/d3-dispatch/blob/master/src/dispatch.js#L59 "Source")
 
-Like [*function*.apply](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call), invokes each registered callback for the specified *type*, passing the callback the specified *arguments*, with *that* as the `this` context. For example, if you wanted to dispatch your *custom* callbacks after handling a native *click* event, while preserving the current `this` context and arguments, you could say:
+与 [*function*.apply](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call) 类似, 调用 *type* 的每个回调，*that* 参数表示回调的 *this* 上下文并传递指定的 *arguments*，例如，如果你想在原始的点击事件后分发一个自定义回调，并给回调传递 `this` 上下文和指定的参数，可以: 
 
 ```js
 selection.on("click", function() {
@@ -79,4 +79,4 @@ selection.on("click", function() {
 });
 ```
 
-You can pass whatever arguments you want to callbacks; most commonly, you might create an object that represents an event, or pass the current datum (*d*) and index (*i*). See [function.call](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/Call) and [function.apply](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/Apply) for further information.
+你可以传递任何想传递的参数，更一般的情况下，你可能会创建一个对象表示当前事件，或者传递当前的数据 (*d*) 和索引 (*i*)；参考[function.call](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/Call) 和 [function.apply](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/Apply) 获取更多信息。
